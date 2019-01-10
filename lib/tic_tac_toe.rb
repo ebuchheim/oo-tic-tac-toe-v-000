@@ -12,8 +12,7 @@ class TicTacToe
       ]      
 
     def initialize
-        board = Array.new(9, " ")
-        @board = board
+        @board = Array.new(9, " ")
     end
 
     def display_board
@@ -25,7 +24,7 @@ class TicTacToe
     end
 
     def input_to_index(input)
-        index = input.to_i - 1
+        input.to_i - 1
     end
 
     def move(index, value = "X")
@@ -33,12 +32,7 @@ class TicTacToe
     end
 
     def position_taken?(input)
-        input_to_index(input)
-        if @board[input] == "X" || @board[input] == "O"
-            true
-        else
-            false
-        end
+        @board[input] == "X" || @board[input] == "O"
     end
 
     def valid_move?(input)
@@ -58,51 +52,47 @@ class TicTacToe
     end
 
     def turn_count    
-        @position_counter = 0
+        position_counter = 0
         @board.each do |space|
             if space == "X" || space == "O"
-                @position_counter += 1
+                position_counter += 1
             end
         end
-        @position_counter
+        position_counter
     end
 
     def current_player
-        turn_count
-        if @position_counter % 2 == 0
-            "X"
-        else
-            "O"
-        end
+        turn_count() % 2 == 0 ? "X" : "O"
     end
 
     def won?
         WIN_COMBINATIONS.each do |individual_combo|  
-            win_index_1 = individual_combo[0]
-            win_index_2 = individual_combo[1]
-            win_index_3 = individual_combo[2]
+            # win_index_1 = individual_combo[0]
+            # win_index_2 = individual_combo[1]
+            # win_index_3 = individual_combo[2]
       
-            position_1 = @board[win_index_1]
-            position_2 = @board[win_index_2]
-            position_3 = @board[win_index_3]
+            # position_1 = @board[win_index_1]
+            # position_2 = @board[win_index_2]
+            # position_3 = @board[win_index_3]
       
-            if position_1 == "X" && position_2 == "X" && position_3 == "X"
-              return individual_combo
-            elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
-              return individual_combo
+            if individual_combo.all? {|i| @board[i] == "X" } || 
+               individual_combo.all? {|i| @board[i] == "O" }
+                return individual_combo
             end
+
+            # if position_1 == "X" && position_2 == "X" && position_3 == "X"
+            #   return individual_combo
+            # elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
+            #   return individual_combo
+            # end
         end
         false
     end
 
     def full?
-        @board.each do |space|
-            if space != "X" && space != "O"
-              return false
-            else
-              true
-            end
-        end
+
+        @board.all? {|space| space == "X" || space == "O"}
+
     end
 
     def draw?
@@ -114,9 +104,9 @@ class TicTacToe
     end
 
     def winner
-        if won?
-            winning_combo = won?
-              @board[winning_combo[0]]
+        winning_combo = won?
+        if winning_combo
+            @board[winning_combo[0]]
           end
     end
 
